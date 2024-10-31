@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Escáner de Libros</title>
-    <script src="https://serratus.github.io/quaggaJS/dist/quagga.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
 </head>
 <body>
     <h1>Escanear Libro</h1>
