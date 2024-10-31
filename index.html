@@ -101,7 +101,7 @@
             const statusTiago = document.getElementById("statusTiago").value;
             const language = document.getElementById("language").value;
 
-            fetch('https://script.google.com/macros/s/AKfycbxHiL9S0r7wBlmmCHOdmxol_osAGwWBDVVuoP92ItyY9tWbU1T9GW9mpqEn4s4NxBRlUg/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxfn4ft2J25E32UUb5WPiZuXTlp3G4DNUn1wlMbqqIoj_d2FVChiyXcFKXRoD1Wty4xyA/exec', {
                 method: 'POST',
                 body: JSON.stringify({ isbn, title, tags, statusJuan, statusTiago, language })
             }).then(response => {
