@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Escáner de Libros</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.2.6/dist/quagga.min.js"></script>
+
 
 </head>
 <body>
@@ -47,43 +48,37 @@
     </form>
 
     <script>
+          
         function startScanner() {
             Quagga.init({
                 inputStream: {
                     name: "Live",
                     type: "LiveStream",
-                    target: document.querySelector('#scanner')
+                    target: document.querySelector('#scanner'), 
+                    constraints: {
+                        facingMode: "environment" // Usa la cámara trasera si está disponible
+                    }
                 },
                 decoder: {
-                    readers: ["ean_reader"]
-                }
+                    readers: ["ean_reader"] // Cambia según el tipo de código de barras
+                },
+                locate: true // Habilita la detección automática del código
             }, function (err) {
                 if (err) {
-                    console.log(err);
+                    console.error("Error al inicializar Quagga2:", err);
                     return;
                 }
                 Quagga.start();
             });
 
-            Quagga.onDetected(async function(result) {
+            Quagga.onDetected(function(result) {
                 const isbn = result.codeResult.code;
                 document.getElementById("isbn").value = isbn;
-                Quagga.stop();
-
-                // Obtener datos del libro usando la API de Google Books
-                try {
-                    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
-                    const data = await response.json();
-                    if (data.totalItems > 0) {
-                        document.getElementById("title").value = data.items[0].volumeInfo.title;
-                    } else {
-                        document.getElementById("title").value = "No encontrado";
-                    }
-                } catch (error) {
-                    console.error("Error obteniendo datos del libro:", error);
-                }
+                Quagga.stop(); // Detiene el escáner después de detectar un código
             });
         }
+
+
 
         function saveToGoogleSheet() {
             const isbn = document.getElementById("isbn").value;
