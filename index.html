@@ -71,12 +71,12 @@
                 Quagga.start();
             });
 
-            Quagga.onDetected(function(result) {
+            Quagga.onDetected(async function(result) {
                 const isbn = result.codeResult.code;
                 document.getElementById("isbn").value = isbn;
-                Quagga.stop(); // Detiene el escáner después de detectar un código
+                Quagga.stop();
 
-                 // Obtener datos del libro usando la API de Google Books
+                // Obtener datos del libro usando la API de Google Books
                 try {
                     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
                     const data = await response.json();
